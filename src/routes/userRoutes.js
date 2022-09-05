@@ -28,6 +28,7 @@ router.route('/:id').get(getUser);
 
 router.patch(
   '/:id',
+  checkCurrentAdmin,
   validate(validateUpdatingUser),
   handleUploadImage('avatar', 'users'),
   updateUser

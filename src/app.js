@@ -1,6 +1,7 @@
 import express from 'express';
 import api from './routes/api.js';
 import globalErrorHandler from './controllers/errorController.js';
+import AppError from './utils/appError.js';
 
 const app = express();
 

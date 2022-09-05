@@ -5,28 +5,34 @@ import {
   checkOptionalEmail,
   checkOptionalName,
   checkOptionalPhone,
+  checkOptionalAddress,
+  checkOptionalGender,
+  checkOptionalBirthday,
 } from './userValidationFactory.js';
 
-export const validateChangingPassword = () => [
+const checkCurrentPassword = () =>
   check('currentPassword')
     .exists()
     .withMessage('Current password is required.')
     .bail()
     .isLength({ min: 6 })
-    .withMessage('Current password must be at least 6 chars long.'),
+    .withMessage('Current password must be at least 6 chars long.');
 
-  async (req, res, next) => {
-    const { password, currentPassword } = req.body;
+const checkDifferentPassword = () => async (req, res, next) => {
+  const { password, currentPassword } = req.body;
 
-    await checkPassword()
-      .bail()
-      .custom((value) => currentPassword !== password)
-      .withMessage('New password must be different from current password.')
-      .run(req);
+  await checkPassword()
+    .bail()
+    .custom((value) => currentPassword !== password)
+    .withMessage('New password must be different from current password.')
+    .run(req);
 
-    return next();
-  },
+  return next();
+};
 
+export const validateChangingPassword = () => [
+  checkCurrentPassword(),
+  checkDifferentPassword(),
   checkConfirmPassword(),
 ];
 
@@ -34,4 +40,7 @@ export const validateUpdatingInfo = () => [
   checkOptionalEmail(),
   checkOptionalName(),
   checkOptionalPhone(),
+  checkOptionalGender(),
+  checkOptionalAddress(),
+  checkOptionalBirthday(),
 ];

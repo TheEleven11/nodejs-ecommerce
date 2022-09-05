@@ -66,3 +66,22 @@ export const checkOptionalPhone = () =>
     .optional()
     .isMobilePhone('vi-VN')
     .withMessage('Phone number is invalid.');
+
+export const checkOptionalAddress = () =>
+  check('address')
+    .optional()
+    .custom((value) => {})
+    .withMessage('Address is invalid.');
+
+export const checkOptionalBirthday = () =>
+  check('birthday')
+    .optional()
+    .isISO8601()
+    .toDate()
+    .withMessage('Birthday is invalid.');
+
+export const checkOptionalGender = () =>
+  check('gender')
+    .optional()
+    .custom((value) => ['male', 'female', 'other'].includes(value))
+    .withMessage('Gender is invalid.');

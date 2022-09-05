@@ -19,7 +19,17 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     avatar: String,
-    address: String,
+    address: {
+      province: String,
+      district: String,
+      ward: String,
+      address: String,
+    },
+    birthday: Date,
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other'],
+    },
     password: {
       type: String,
       required: true,
