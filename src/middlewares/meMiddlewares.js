@@ -5,7 +5,7 @@ export const getCurrentId = (req, res, next) => {
   next();
 };
 
-export const cleanUpdatedInfoObject = cleanObject('email', 'name', 'phone');
+export const cleanUpdatedInfoObject = cleanObject('name', 'phone');
 
 export const validateUpdatingUser = () => [
   checkOptionalEmail(),
