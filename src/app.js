@@ -1,9 +1,12 @@
 import express from 'express';
+import cors from 'cors';
 import api from './routes/api.js';
 import globalErrorHandler from './controllers/errorController.js';
 import AppError from './utils/appError.js';
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 

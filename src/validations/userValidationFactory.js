@@ -36,7 +36,6 @@ export const checkPassword = () =>
 
 export const checkConfirmPassword = () => async (req, res, next) => {
   const { password, confirmPassword } = req.body;
-
   if (password) {
     await check('confirmPassword')
       .exists()
@@ -49,6 +48,24 @@ export const checkConfirmPassword = () => async (req, res, next) => {
       .withMessage('Passwords do not match.')
       .run(req);
   }
+  return next();
+};
+
+export const checkCurrentPassword = () =>
+  check('currentPassword')
+    .exists()
+    .withMessage('Current password is required.')
+    .bail()
+    .isLength({ min: 6 })
+    .withMessage('Current password must be at least 6 chars long.');
+
+export const checkDifferentPassword = () => async (req, res, next) => {
+  const { password, currentPassword } = req.body;
+  await checkPassword()
+    .bail()
+    .custom((value) => currentPassword !== password)
+    .withMessage('New password must be different from current password.')
+    .run(req);
   return next();
 };
 
@@ -70,7 +87,9 @@ export const checkOptionalPhone = () =>
 export const checkOptionalAddress = () =>
   check('address')
     .optional()
-    .custom((value) => {})
+    .custom((value) => {
+      return value.province && value.district && value.ward && value.detail;
+    })
     .withMessage('Address is invalid.');
 
 export const checkOptionalBirthday = () =>
@@ -85,3 +104,15 @@ export const checkOptionalGender = () =>
     .optional()
     .custom((value) => ['male', 'female', 'other'].includes(value))
     .withMessage('Gender is invalid.');
+
+export const checkOptionalRole = () =>
+  check('role')
+    .optional()
+    .custom((value) => ['customer', 'admin'].includes(value))
+    .withMessage('Role is invalid.');
+
+export const checkOptionalPassword = () =>
+  check('password')
+    .optional()
+    .isLength({ min: 6 })
+    .withMessage('Password must be at least 6 chars long.');

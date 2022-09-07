@@ -10,7 +10,7 @@ export const createUploadDir = (dirName) => {
   };
 };
 
-export const getUploadMulter = (imgField, dirName) => {
+export const getUploadMulter = (imgField, dirName, type) => {
   const storage = multer.diskStorage({
     destination: (req, file, callback) => {
       callback(null, `public/imgs/${dirName}/`);
@@ -20,10 +20,16 @@ export const getUploadMulter = (imgField, dirName) => {
         /[A-Z]/g,
         (letter) => `-${letter.toLowerCase()}`
       );
-      req.body[imgField] = `${prefix.slice(0, -1)}-${
-        req.params.id
-      }-${Date.now()}.jpeg`;
-      callback(null, req.body[imgField]);
+      const path = `${prefix.slice(0, -1)}-${req.params.id}-${Date.now()}.jpeg`;
+
+      if (type === 'single') {
+        req.body[imgField] = path;
+      } else {
+        if (req.body[imgField] === undefined) req.body[imgField] = [];
+        req.body[imgField].push(path);
+      }
+
+      callback(null, path);
     },
   });
 
@@ -33,6 +39,13 @@ export const getUploadMulter = (imgField, dirName) => {
 export const handleUploadImage = (imgField, dirName) => {
   return [
     createUploadDir(dirName),
-    getUploadMulter(imgField, dirName).single(imgField),
+    getUploadMulter(imgField, dirName, 'single').single(imgField),
+  ];
+};
+
+export const handleUploadMultiImages = (imgField, dirName) => {
+  return [
+    createUploadDir(dirName),
+    getUploadMulter(imgField, dirName, 'array').array(imgField, 1),
   ];
 };

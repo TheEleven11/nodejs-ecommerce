@@ -23,13 +23,14 @@ const userSchema = new mongoose.Schema(
       province: String,
       district: String,
       ward: String,
-      address: String,
+      detail: String,
     },
     birthday: Date,
     gender: {
       type: String,
       enum: ['male', 'female', 'other'],
     },
+    imgs: [String],
     password: {
       type: String,
       required: true,

@@ -16,7 +16,7 @@ export const checkCurrentAdmin = catchAsync(async (req, res, next) => {
   next();
 });
 
-export const cleanUpdatedUserObject = cleanObject(
+export const cleanCreatedUserObject = cleanObject(
   'email',
   'name',
   'phone',
@@ -25,11 +25,14 @@ export const cleanUpdatedUserObject = cleanObject(
   'confirmPassword'
 );
 
-export const cleanCreatedNewUserObject = cleanObject(
+export const cleanUpdatedUserObject = cleanObject(
   'email',
   'name',
   'phone',
   'role',
+  'gender',
+  'address',
+  'birthday',
   'password',
   'confirmPassword'
 );

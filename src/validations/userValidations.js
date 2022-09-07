@@ -1,5 +1,3 @@
-import { check } from 'express-validator';
-
 import {
   checkEmail,
   checkName,
@@ -12,21 +10,11 @@ import {
   checkOptionalGender,
   checkOptionalAddress,
   checkOptionalBirthday,
+  checkOptionalRole,
+  checkOptionalPassword,
 } from './userValidationFactory.js';
 
-const checkOptionalRole = () =>
-  check('role')
-    .optional()
-    .custom((value) => ['customer', 'admin'].includes(value))
-    .withMessage('Role is invalid.');
-
-const checkOptionalPassword = () =>
-  check('password')
-    .optional()
-    .isLength({ min: 6 })
-    .withMessage('Password must be at least 6 chars long.');
-
-export const validateCreatingNewUser = () => [
+export const validateCreatingUser = () => [
   checkEmail(),
   checkName(),
   checkPhone(),
