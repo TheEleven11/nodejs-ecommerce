@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import omit from 'lodash.omit';
+import lodash from 'lodash';
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -14,7 +14,7 @@ const createSendToken = (user, statusCode, req, res) => {
     status: 'success',
     token,
     data: {
-      user: omit(user.toJSON(), 'password'),
+      user: lodash.omit(user.toJSON(), 'password'),
     },
   });
 };

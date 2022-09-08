@@ -6,7 +6,16 @@ import {
   updateProduct,
   deleteProduct,
 } from '../controllers/productController.js';
+import validate from '../middlewares/validate.js';
 import { protect, restrictTo } from '../middlewares/authMiddlewares.js';
+import {
+  cleanCreatedProductObject,
+  cleanUpdatedProductObject,
+} from '../middlewares/productMiddlewares.js';
+import {
+  validateCreatingProduct,
+  validateUpdatingProduct,
+} from '../validations/productValidations.js';
 
 const router = express.Router();
 
@@ -16,9 +25,18 @@ router.get('/:id', getProduct);
 
 router.use(protect, restrictTo('admin'));
 
-router.post('/', createProduct);
-
-router.patch('/:id', updateProduct);
+router.post(
+  '/',
+  cleanCreatedProductObject,
+  validate(validateCreatingProduct),
+  createProduct
+);
+router.patch(
+  '/:id',
+  cleanUpdatedProductObject,
+  validate(validateUpdatingProduct),
+  updateProduct
+);
 
 router.delete('/:id', deleteProduct);
 

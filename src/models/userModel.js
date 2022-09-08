@@ -13,12 +13,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    phone: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    avatar: String,
+    phone: String,
     address: {
       province: String,
       district: String,
@@ -30,7 +25,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ['male', 'female', 'other'],
     },
-    imgs: [String],
+    avatar: String,
     password: {
       type: String,
       required: true,

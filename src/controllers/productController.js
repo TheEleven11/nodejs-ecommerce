@@ -9,7 +9,10 @@ import Product from '../models/productModel.js';
 
 export const getAllProducts = getAll(Product);
 
-export const getProduct = getOne(Product);
+export const getProduct = getOne(Product, [
+  { path: 'category', select: 'name' },
+  { path: 'brand', select: 'name' },
+]);
 
 export const createProduct = createOne(Product);
 

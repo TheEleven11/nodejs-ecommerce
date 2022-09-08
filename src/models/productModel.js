@@ -1,25 +1,5 @@
 import mongoose from 'mongoose';
 
-// export const category = {
-//   MOBILEPHONE: 0,
-//   LAPTOP: 1,
-//   TABLET: 2,
-//   GADGET: 3,
-//   SOUND: 4,
-//   CLOCK: 5,
-//   OTHER: 6,
-// };
-
-export const categories = [
-  'mobilePhone',
-  'laptop',
-  'tablet',
-  'gadget',
-  'sound',
-  'clock',
-  'other',
-];
-
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -31,15 +11,18 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: Number,
-      enum: categories,
-      required: true,
+      type: mongoose.Schema.ObjectId,
+      ref: 'Category',
     },
-    details: String,
+    brand: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Brand',
+    },
     price: {
       type: Number,
       required: true,
     },
+    details: String,
     discount: {
       type: Number,
       default: 0,
