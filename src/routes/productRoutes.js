@@ -7,6 +7,7 @@ import {
   deleteProduct,
 } from '../controllers/productController.js';
 import validate from '../middlewares/validate.js';
+import { handleUploadMultiImages } from '../middlewares/handleUploadImage.js';
 import { protect, restrictTo } from '../middlewares/authMiddlewares.js';
 import {
   cleanCreatedProductObject,
@@ -31,10 +32,12 @@ router.post(
   validate(validateCreatingProduct),
   createProduct
 );
+
 router.patch(
   '/:id',
   cleanUpdatedProductObject,
   validate(validateUpdatingProduct),
+  handleUploadMultiImages('images', 'products'),
   updateProduct
 );
 

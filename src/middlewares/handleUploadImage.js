@@ -46,6 +46,6 @@ export const handleUploadImage = (imgField, dirName) => {
 export const handleUploadMultiImages = (imgField, dirName) => {
   return [
     createUploadDir(dirName),
-    getUploadMulter(imgField, dirName, 'array').array(imgField, 1),
+    getUploadMulter(imgField, dirName, 'array').array(imgField, 5),
   ];
 };

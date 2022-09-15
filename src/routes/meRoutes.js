@@ -11,7 +11,7 @@ import {
   cleanUpdatedInfoObject,
   getCurrentId,
 } from '../middlewares/meMiddlewares.js';
-import { handleUploadMultiImages } from '../middlewares/handleUploadImage.js';
+import { handleUploadImage } from '../middlewares/handleUploadImage.js';
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ router.post(
   getCurrentId,
   cleanUpdatedInfoObject,
   validate(validateUpdatingInfo),
-  handleUploadMultiImages('imgs', 'users'),
+  handleUploadImage('avatar', 'users'),
   updateUser
 );
 

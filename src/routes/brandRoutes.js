@@ -9,6 +9,7 @@ import {
 import validate from '../middlewares/validate.js';
 import { protect, restrictTo } from '../middlewares/authMiddlewares.js';
 import { cleanBrandObject } from '../middlewares/brandMiddlewares.js';
+import { handleUploadImage } from '../middlewares/handleUploadImage.js';
 import {
   validateCreatingBrand,
   validateUpdatingBrand,
@@ -33,6 +34,7 @@ router.patch(
   '/:id',
   cleanBrandObject,
   validate(validateUpdatingBrand),
+  handleUploadImage('logo', 'brands'),
   updateBrand
 );
 
