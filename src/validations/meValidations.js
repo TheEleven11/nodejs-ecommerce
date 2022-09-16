@@ -1,7 +1,6 @@
 import { check } from 'express-validator';
 import User from '../models/userModel.js';
 import {
-  checkPassword,
   checkString,
   checkOptionalString,
   checkOptionalEnum,
@@ -52,7 +51,7 @@ const checkConfirmPassword = () => async (req, res, next) => {
 
 const checkDifferentPassword = () => async (req, res, next) => {
   const { password, currentPassword } = req.body;
-  await checkPassword()
+  await checkString('password', 6)
     .bail()
     .custom((value) => currentPassword !== password)
     .withMessage('New password must be different from current password.')
