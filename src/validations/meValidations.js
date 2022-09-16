@@ -1,6 +1,7 @@
 import { check } from 'express-validator';
 import User from '../models/userModel.js';
 import {
+  checkPassword,
   checkString,
   checkOptionalString,
   checkOptionalEnum,
