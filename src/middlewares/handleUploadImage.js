@@ -1,5 +1,8 @@
 import multer from 'multer';
 import { mkdirSync } from 'fs';
+import AppError from '../utils/appError.js';
+
+const whitelist = ['image/png', 'image/jpeg', 'image/jpg'];
 
 export const createUploadDir = (dirName) => {
   return (req, res, next) => {
@@ -16,6 +19,12 @@ export const getUploadMulter = (imgField, dirName, type) => {
       callback(null, `public/imgs/${dirName}/`);
     },
     filename: (req, file, callback) => {
+      if (!whitelist.includes(file.mimetype)) {
+        return callback(
+          new AppError('This file is not allowed. Please provide images.', 403)
+        );
+      }
+
       let prefix = dirName.replace(
         /[A-Z]/g,
         (letter) => `-${letter.toLowerCase()}`
