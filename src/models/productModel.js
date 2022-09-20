@@ -13,10 +13,12 @@ const productSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.ObjectId,
       ref: 'Category',
+      required: true,
     },
     brand: {
       type: mongoose.Schema.ObjectId,
       ref: 'Brand',
+      required: true,
     },
     price: {
       type: Number,
