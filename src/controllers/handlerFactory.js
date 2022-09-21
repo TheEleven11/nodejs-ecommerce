@@ -70,15 +70,23 @@ export const getAll = (Model) =>
     const features = new APIFeatures(Model.find(), req.query)
       .filter()
       .sort()
-      .limitFields()
-      .paginate();
+      .limitFields();
     const doc = await features.query;
+
+    let finalResult = doc;
+
+    if (req.query.page && req.query.limit) {
+      const start = (req.query.page - 1) * req.query.limit;
+      const end = start + req.query.limit;
+      finalResult = doc.slice(start, end);
+    }
 
     res.status(200).json({
       status: 'success',
-      results: doc.length,
+      total: doc.length,
+      results: finalResult.length,
       data: {
-        data: doc,
+        data: finalResult,
       },
     });
   });
