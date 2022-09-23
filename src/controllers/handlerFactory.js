@@ -77,7 +77,8 @@ export const getAll = (Model) =>
 
     if (req.query.page && req.query.limit) {
       const start = (req.query.page - 1) * req.query.limit;
-      const end = start + req.query.limit;
+      const end = start + parseInt(req.query.limit);
+      console.log(start, end);
       finalResult = doc.slice(start, end);
     }
 
